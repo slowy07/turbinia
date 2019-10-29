@@ -198,6 +198,11 @@ class OutputManager(object):
         result.saved_paths.append(new_path)
         saved_path = new_path
         saved_path_type = writer.name
+      elif (not new_path and result and os.path.exists(file_) and
+            os.path.getsize(file_) > 0):
+        # We want to save the old path if we didn't copy the file for some
+        # reason, but the source path is still valid.
+        result.saved_paths.append(file_)
       if writer.name == LocalOutputWriter.NAME:
         local_path = new_path
 
